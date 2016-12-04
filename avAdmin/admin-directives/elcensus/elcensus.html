@@ -11,6 +11,8 @@
     <div av-admin-alerts></div>
 
     <div class="affix-placeholder"></div>
+    
+    <div>
     <h4
       class="header-block"
       av-affix-top-offset="50"
@@ -99,6 +101,14 @@
         </div>
       </div>
     </h4>
+    </div>
+    
+    <div class="hidden-sm hidden-md hidden-lg">
+      <br/>
+      <br/>
+    </div>
+
+    <div class="censustableScroll" style="overflow:scroll">
     <table
       class="table censustable"
       infinite-scroll="loadMoreCensus()"
@@ -202,6 +212,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
 
     <div ng-if="showSuccessAction">
       <button
