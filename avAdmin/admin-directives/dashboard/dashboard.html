@@ -254,24 +254,25 @@
                 </dl>
             </div>
         </div>
-
-        <table role="table" class="table">
-            <tr class="text-success">
-                <th></th>
-                <th ng-i18next>avAdmin.dashboard.option</th>
-                <th ng-i18next>avAdmin.dashboard.votes</th>
-                <th></th>
-                <th ng-i18next>avAdmin.dashboard.winner</th>
-            </tr>
-            <tr ng-repeat="an in q.answers|orderBy:'-total_count'">
-                <td>{{ $index + 1 }}</td>
-                <td>{{ an.text }}</td>
-                <td>{{ an.total_count|number }}</td>
-                <td>{{ percentVotes(an.total_count, q, "over-valid-votes") }}</td>
-                <td ng-if="an.winner_position === 0 || an.winner_position">{{ an.winner_position + 1}}</td>
-                <td ng-if="!(an.winner_position === 0 || an.winner_position)">--</td>
-            </tr>
-        </table>
+        <div class="overflow-table">
+            <table role="table" class="table">
+                <tr class="text-success">
+                    <th></th>
+                    <th ng-i18next>avAdmin.dashboard.option</th>
+                    <th ng-i18next>avAdmin.dashboard.votes</th>
+                    <th></th>
+                    <th ng-i18next>avAdmin.dashboard.winner</th>
+                </tr>
+                <tr ng-repeat="an in q.answers|orderBy:'-total_count'">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ an.text }}</td>
+                    <td>{{ an.total_count|number }}</td>
+                    <td>{{ percentVotes(an.total_count, q, "over-valid-votes") }}</td>
+                    <td ng-if="an.winner_position === 0 || an.winner_position">{{ an.winner_position + 1}}</td>
+                    <td ng-if="!(an.winner_position === 0 || an.winner_position)">--</td>
+                </tr>
+            </table>
+        </div>
     </div>
     <!-- endof results -->
 </div>
