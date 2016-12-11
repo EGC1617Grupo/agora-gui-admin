@@ -41,7 +41,8 @@ angular.module(
   'angular-date-picker-polyfill',
   'ng-autofocus',
   'LocalStorageModule',
-  'agora-gui-common'
+  'agora-gui-common',
+  'nvd3'
 ]);
 
 angular.module('jm.i18next').config(function ($i18nextProvider, ConfigServiceProvider) {
