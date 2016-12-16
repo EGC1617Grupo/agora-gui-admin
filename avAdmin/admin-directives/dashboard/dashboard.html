@@ -290,12 +290,7 @@
         <!-- grafica de datos -->
         <nvd3 options="dataOptions" data="getTableData(q)"></nvd3>
         <!-- grafica de participacion -->
-        <nvd3 options="participationOptions"
-            data="[
-                {key: i18next('avAdmin.dashboard.validvotes'), y: addDots(q.totals.valid_votes)},
-                {key: i18next('avAdmin.dashboard.blankvotes'), y: addDots(q.totals.blank_votes)},
-                {key: i18next('avAdmin.dashboard.nullvotes'),  y: addDots(q.totals.null_votes)}
-            ]">
+        <nvd3 options="participationOptions" data="getParticipationData(q)">
         </nvd3>
     </div>
     <!-- endof results -->

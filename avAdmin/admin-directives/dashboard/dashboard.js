@@ -156,6 +156,13 @@ angular.module('avAdmin')
       };
 
       scope.i18next = $i18next;
+      scope.getParticipationData = function(question) {
+        return [
+          {key: $i18next('avAdmin.dashboard.validvotes'), y: scope.addDots(question.totals.valid_votes)},
+          {key: $i18next('avAdmin.dashboard.blankvotes'), y: scope.addDots(question.totals.blank_votes)},
+          {key: $i18next('avAdmin.dashboard.nullvotes'),  y: scope.addDots(question.totals.null_votes)}
+        ];
+      }
 
       ElectionsApi.getElection(id)
         .then(function(el) {
