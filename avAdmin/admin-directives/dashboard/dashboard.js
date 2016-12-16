@@ -24,6 +24,8 @@ angular.module('avAdmin')
     $stateParams,
     $modal,
     PercentVotesService,
+    AddDotsToIntService,
+    $i18next,
     SendMsg,
     ConfigService)
 
@@ -99,6 +101,61 @@ angular.module('avAdmin')
       scope.msg = null;
       scope.prevStatus = null;
       scope.percentVotes = PercentVotesService;
+
+      // chart options
+      scope.participationOptions = {
+        chart: {
+          height: 500,
+          x: function (d) { return d.key; },
+          y: function (d) { return d.y; },
+          showLabels: false,
+          duration: 500,
+          labelThreshold: 0.01,
+          legend: {
+            margin: {
+              top: 5,
+              right: 35,
+              bottom: 5,
+              left: 0
+            }
+          }
+        }
+      };
+      scope.dataOptions = {
+        chart: {
+          type: 'pieChart',
+          height: 450,
+          donut: true,
+          x: function (d) { return d.key; },
+          y: function (d) { return d.y; },
+          showLabels: false,
+          pie: {
+            startAngle: function (d) { return d.startAngle / 2 - Math.PI / 2; },
+            endAngle: function (d) { return d.endAngle / 2 - Math.PI / 2; }
+          },
+          duration: 500,
+          legend: {
+            margin: {
+              top: 25,
+              right: 70,
+              bottom: 5,
+              left: 0
+            }
+          }
+        }
+      };
+      scope.addDots = AddDotsToIntService;
+
+      scope.getTableData = function(question) {
+        var tableData = [];
+        _.each(question.answers, function(answer){
+          var perc = PercentVotesService(answer.total_count, question);
+          tableData.push({key: answer.text, y:perc.substring(0, perc.length - 1)});
+        });
+        return tableData;
+      };
+
+      scope.i18next = $i18next;
 
       ElectionsApi.getElection(id)
         .then(function(el) {

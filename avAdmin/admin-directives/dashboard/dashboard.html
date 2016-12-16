@@ -225,54 +225,78 @@
         </ul>
       </div>
     </h2>
-    <div class="well question-result" ng-repeat="q in election.results.questions">
-        <div class="row">
-            <div class="col-md-7">
-                <h2>{{ q.title }}</h2>
+    <div>
+        <ul class="nav nav-tabs" ng-init="showtable=true; classtable='active'; classgraph=''">
+            <li ng-click="showtable=true; classtable='active'; classgraph=''" class="{{classtable}}">
+                <a ng-i18next="avAdmin.results.showTable"></a>
+            </li>
+            <li ng-click="showtable=false; classgraph='active'; classtable=''" class="{{classgraph}}">
+                <a ng-i18next="avAdmin.results.showChart"></a>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="showtable">
+        <div class="well question-result" ng-repeat="q in election.results.questions">
+            <div class="row">
+                <div class="col-md-7">
+                    <h2>{{ q.title }}</h2>
+                </div>
+                <div class="col-md-5">
+                    <dl class="dl-horizontal">
+                    <dt>{{ (q.totals.valid_votes + q.totals.null_votes + q.totals.blank_votes) }}</dt>
+                    <dd ng-i18next>avAdmin.dashboard.votes</dd>
+                    <dt></dt>
+                    <dd>--</dd>
+                    <dt>{{ q.totals.valid_votes|number }}</dt>
+                    <dd>
+                        <span ng-i18next>avAdmin.dashboard.optionvotes</span>
+                        <span>({{ percentVotes(q.totals.valid_votes, q) }})</span>
+                    </dd>
+                    <dt>{{ q.totals.blank_votes }}</dt>
+                    <dd>
+                        <span ng-i18next>avAdmin.dashboard.blankvotes</span>
+                        <span>({{ percentVotes(q.totals.blank_votes, q) }})</span>
+                    </dd>
+                    <dt>{{ q.totals.null_votes }}</dt>
+                    <dd>
+                        <span ng-i18next>avAdmin.dashboard.nullvotes</span>
+                        <span>({{ percentVotes(q.totals.null_votes, q) }})</span>
+                    </dd>
+                    </dl>
+                </div>
             </div>
-            <div class="col-md-5">
-                <dl class="dl-horizontal">
-                  <dt>{{ (q.totals.valid_votes + q.totals.null_votes + q.totals.blank_votes) }}</dt>
-                  <dd ng-i18next>avAdmin.dashboard.votes</dd>
-                  <dt></dt>
-                  <dd>--</dd>
-                  <dt>{{ q.totals.valid_votes|number }}</dt>
-                  <dd>
-                      <span ng-i18next>avAdmin.dashboard.optionvotes</span>
-                      <span>({{ percentVotes(q.totals.valid_votes, q) }})</span>
-                  </dd>
-                  <dt>{{ q.totals.blank_votes }}</dt>
-                  <dd>
-                      <span ng-i18next>avAdmin.dashboard.blankvotes</span>
-                      <span>({{ percentVotes(q.totals.blank_votes, q) }})</span>
-                  </dd>
-                  <dt>{{ q.totals.null_votes }}</dt>
-                  <dd>
-                      <span ng-i18next>avAdmin.dashboard.nullvotes</span>
-                      <span>({{ percentVotes(q.totals.null_votes, q) }})</span>
-                  </dd>
-                </dl>
+            <div class="overflow-table">
+                <table role="table" class="table">
+                    <tr class="text-success">
+                        <th></th>
+                        <th ng-i18next>avAdmin.dashboard.option</th>
+                        <th ng-i18next>avAdmin.dashboard.votes</th>
+                        <th></th>
+                        <th ng-i18next>avAdmin.dashboard.winner</th>
+                    </tr>
+                    <tr ng-repeat="an in q.answers|orderBy:'-total_count'">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ an.text }}</td>
+                        <td>{{ an.total_count|number }}</td>
+                        <td>{{ percentVotes(an.total_count, q, "over-valid-votes") }}</td>
+                        <td ng-if="an.winner_position === 0 || an.winner_position">{{ an.winner_position + 1}}</td>
+                        <td ng-if="!(an.winner_position === 0 || an.winner_position)">--</td>
+                    </tr>
+                </table>
             </div>
         </div>
-        <div class="overflow-table">
-            <table role="table" class="table">
-                <tr class="text-success">
-                    <th></th>
-                    <th ng-i18next>avAdmin.dashboard.option</th>
-                    <th ng-i18next>avAdmin.dashboard.votes</th>
-                    <th></th>
-                    <th ng-i18next>avAdmin.dashboard.winner</th>
-                </tr>
-                <tr ng-repeat="an in q.answers|orderBy:'-total_count'">
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ an.text }}</td>
-                    <td>{{ an.total_count|number }}</td>
-                    <td>{{ percentVotes(an.total_count, q, "over-valid-votes") }}</td>
-                    <td ng-if="an.winner_position === 0 || an.winner_position">{{ an.winner_position + 1}}</td>
-                    <td ng-if="!(an.winner_position === 0 || an.winner_position)">--</td>
-                </tr>
-            </table>
-        </div>
+    </div>
+    <div class="col-xs-12 col-md-7 no-padding-left" ng-hide="showtable" ng-repeat="q in election.results.questions">
+        <!-- grafica de datos -->
+        <nvd3 options="dataOptions" data="getTableData(q)"></nvd3>
+        <!-- grafica de participacion -->
+        <nvd3 options="participationOptions"
+            data="[
+                {key: i18next('avAdmin.dashboard.validvotes'), y: addDots(q.totals.valid_votes)},
+                {key: i18next('avAdmin.dashboard.blankvotes'), y: addDots(q.totals.blank_votes)},
+                {key: i18next('avAdmin.dashboard.nullvotes'),  y: addDots(q.totals.null_votes)}
+            ]">
+        </nvd3>
     </div>
     <!-- endof results -->
 </div>
