@@ -105,7 +105,9 @@ angular.module('avAdmin')
       // chart options
       scope.participationOptions = {
         chart: {
-          height: 500,
+          type: 'pieChart',
+          height: 300,
+          width: 300,
           x: function (d) { return d.key; },
           y: function (d) { return d.y; },
           showLabels: false,
@@ -124,7 +126,8 @@ angular.module('avAdmin')
       scope.dataOptions = {
         chart: {
           type: 'pieChart',
-          height: 450,
+          height: 300,
+          width: 300,
           donut: true,
           x: function (d) { return d.key; },
           y: function (d) { return d.y; },
@@ -156,11 +159,21 @@ angular.module('avAdmin')
       };
 
       scope.i18next = $i18next;
+      scope.participationoptionsvotes = $i18next('avAdmin.dashboard.optionsvotes');
+      scope.participationBlankVotes = $i18next('avAdmin.dashboard.blankvotes');
+      scope.participationNullVotes  = $i18next('avAdmin.dashboard.nullvotes');
+
+      scope.$on("i18nextLanguageChange", function(){
+        scope.participationoptionsvotes = $i18next('avAdmin.dashboard.optionsvotes');
+        scope.participationBlankVotes = $i18next('avAdmin.dashboard.blankvotes');
+        scope.participationNullVotes  = $i18next('avAdmin.dashboard.nullvotes');
+      });
+
       scope.getParticipationData = function(question) {
         return [
-          {key: $i18next('avAdmin.dashboard.validvotes'), y: scope.addDots(question.totals.valid_votes)},
-          {key: $i18next('avAdmin.dashboard.blankvotes'), y: scope.addDots(question.totals.blank_votes)},
-          {key: $i18next('avAdmin.dashboard.nullvotes'),  y: scope.addDots(question.totals.null_votes)}
+          {key: scope.participationoptionsvotes, y: scope.addDots(question.totals.valid_votes)},
+          {key: scope.participationBlankVotes, y: scope.addDots(question.totals.blank_votes)},
+          {key: scope.participationNullVotes,  y: scope.addDots(question.totals.null_votes)}
         ];
       };
 
