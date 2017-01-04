@@ -159,19 +159,19 @@ angular.module('avAdmin')
       };
 
       scope.i18next = $i18next;
-      scope.participationoptionsvotes = $i18next('avAdmin.dashboard.optionsvotes');
+      scope.participationoptionvotes = $i18next('avAdmin.dashboard.optionvotes');
       scope.participationBlankVotes = $i18next('avAdmin.dashboard.blankvotes');
       scope.participationNullVotes  = $i18next('avAdmin.dashboard.nullvotes');
 
       scope.$on("i18nextLanguageChange", function(){
-        scope.participationoptionsvotes = $i18next('avAdmin.dashboard.optionsvotes');
+        scope.participationoptionvotes = $i18next('avAdmin.dashboard.optionvotes');
         scope.participationBlankVotes = $i18next('avAdmin.dashboard.blankvotes');
         scope.participationNullVotes  = $i18next('avAdmin.dashboard.nullvotes');
       });
 
       scope.getParticipationData = function(question) {
         return [
-          {key: scope.participationoptionsvotes, y: scope.addDots(question.totals.valid_votes)},
+          {key: scope.participationoptionvotes, y: scope.addDots(question.totals.valid_votes)},
           {key: scope.participationBlankVotes, y: scope.addDots(question.totals.blank_votes)},
           {key: scope.participationNullVotes,  y: scope.addDots(question.totals.null_votes)}
         ];
