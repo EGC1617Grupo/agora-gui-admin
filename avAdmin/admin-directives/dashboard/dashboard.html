@@ -288,9 +288,10 @@
     <div ng-hide="showtable">
         <div ng-repeat="q in election.results.questions">
             <h2>{{ q.title }}</h2>
-            <nvd3 options="dataOptions" data="getTableData(q)"></nvd3>
-            <nvd3 options="participationOptions"
-            data="getParticipationData(q)"></nvd3>
+            <div style="display: flex; flex-wrap: wrap">
+                <nvd3 options="dataOptions" data="getTableData(q)"></nvd3>
+                <nvd3 options="participationOptions" data="getParticipationData(q)"></nvd3>
+            </div>
         </div>
     </div>
     <!--
