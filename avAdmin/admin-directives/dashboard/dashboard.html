@@ -224,7 +224,7 @@
         </ul>
       </div>
     </h2>
-    <div>
+    <div ng-show="election.results.questions.length">
         <ul class="nav nav-tabs" ng-init="showtable=true; classtable='active'; classgraph=''">
             <li ng-click="showtable=true; classtable='active'; classgraph=''" class="{{classtable}}">
                 <a ng-i18next="avAdmin.results.showTable"></a>
