@@ -286,7 +286,7 @@
         </div>
     </div>
     <div ng-hide="showtable">
-        <div ng-repeat="q in election.results.questions">
+        <div ng-repeat="q in election.results.questions track by $index">
             <h2>{{ q.title }}</h2>
             <div style="display: flex; flex-wrap: wrap">
                 <nvd3 options="dataOptions" data="getTableData(q)"></nvd3>
@@ -294,13 +294,5 @@
             </div>
         </div>
     </div>
-    <!--
-    <div ng-show="showtable">
-
-    </div>
-    <div class="no-padding-left" ng-hide="showtable" ng-repeat="q in election.results.questions">
-        <nvd3 options="dataOptions" data="getTableData(q)"></nvd3>
-    </div>
-    -->
     <!-- endof results -->
 </div>
