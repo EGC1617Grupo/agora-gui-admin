@@ -29,6 +29,7 @@ exports.config = {
   jasmineNodeOpts: {
     defaultTimeoutInterval: 30000
   },
+  getPageTimeout: 20000,
   baseUrl: 'http://agora'
 }
 /* jshint ignore:end */
