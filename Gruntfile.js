@@ -333,6 +333,7 @@ module.exports = function (grunt) {
           '<%= ngtemplates.common.dest %>',
           'bower_components/angular-mocks/angular-mocks.js',
           'plugins/**/*.js',
+          'avAdmin/new-election-send-webspec.js',
           createFolderGlobs('*-spec.js')
         ],
         logLevel:'ERROR',
@@ -354,7 +355,7 @@ module.exports = function (grunt) {
     protractor: {
       options: {
         configFile: "node_modules/protractor/referenceConf.js", // Default config file
-        keepAlive: true, // If false, the grunt process stops when the test fails.
+        keepAlive: false, // If false, the grunt process stops when the test fails.
         noColor: false, // If true, protractor will not use colors in its output.
         args: {
         // Arguments passed to the command
@@ -397,6 +398,7 @@ module.exports = function (grunt) {
   grunt.registerTask('serve', ['dom_munger:read','jshint','connect', 'watch']);
   grunt.registerTask('test',['dom_munger:read','karma:headless']);
   grunt.registerTask('test-all',['dom_munger:read','karma:all_tests']);
+  grunt.registerTask('test-e2e',['dom_munger:read','protractor']);
 
 
   grunt.event.on('watch', function(action, filepath) {
