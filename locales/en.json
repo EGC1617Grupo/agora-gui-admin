@@ -35,6 +35,8 @@
       "thisisATestElectionPopover": "This is a test election. For security reasons, real elections can only be created out of successful test elections. You must complete the election process up to the results publish step."
     },
     "results": {
+      "showChart": "Graphic results",
+      "showTable": "Numeric results",
       "downloadData": "Download data",
       "downloadBallotsCsv": "Download Ballots Spreadsheet (CSV format)",
       "downloadResultsCsv": "Download Election Results (CSV format)",

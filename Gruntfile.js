@@ -222,7 +222,8 @@ module.exports = function (grunt) {
             {selector:'body',html:'<script src="/admin/app-v3.0.1.min.js"></script>'},
             {selector:'body',html:'<script src="/admin/avPlugins-v3.0.1.js"></script>'},
             {selector:'head',html:'<link rel="stylesheet" id="theme" data-base="/admin/" href="/admin/themes/default/app.min.css">'},
-            {selector:'head',html:'<link rel="stylesheet" id="plugins" data-base="/admin/" href="/admin/plugins.css">'}
+            {selector:'head',html:'<link rel="stylesheet" id="plugins" data-base="/admin/" href="/admin/plugins.css">'},
+            {selector:'head',html:'<link rel="stylesheet" id="nvd3" data-base="/admin/" href="/admin/nv.d3.css">'},
           ]
         },
         src:'index.html',
@@ -245,6 +246,7 @@ module.exports = function (grunt) {
       main: {
         files: {
           'dist/plugins.css': ['temp/plugins/**/*.css'],
+          'dist/nv.d3.css': ['bower_components/nvd3/build/nv.d3.css'],
           'temp/libcompat.js': [
             'vendor/jquery.compat/jquery-1.11.1.js',
             'vendor/json3/json-v3.3.2.js',

@@ -36,6 +36,8 @@
       "thisisATestElectionPopover": "Esta es una votación de prueba. Por motivos de seguridad, sólo pueden crearse votaciones reales a partir de votaciones de prueba exitosas. Para ello, debes completar el proceso de la votación hasta el paso de publicar resultados"
     },
     "results": {
+      "showTable": "Resultados numericos",
+      "showChart": "Resultados graficos",
       "downloadData": "Descargar datos",
       "downloadBallotsCsv": "Descargar votos como hoja de cálculo (formato CSV)",
       "downloadResultsCsv": "Descargar Resultados del Escrutinio (formato CSV)",

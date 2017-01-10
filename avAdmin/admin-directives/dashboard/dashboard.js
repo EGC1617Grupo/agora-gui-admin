@@ -24,6 +24,8 @@ angular.module('avAdmin')
     $stateParams,
     $modal,
     PercentVotesService,
+    AddDotsToIntService,
+    $i18next,
     SendMsg,
     ConfigService)
 
@@ -99,6 +101,88 @@ angular.module('avAdmin')
       scope.msg = null;
       scope.prevStatus = null;
       scope.percentVotes = PercentVotesService;
+
+      // chart options
+      scope.participationOptions = {
+        chart: {
+          type: 'pieChart',
+          height: 300,
+          width: 300,
+          x: function (d) { return d.key; },
+          y: function (d) { return d.y; },
+          showLabels: false,
+          duration: 500,
+          labelThreshold: 0.01,
+          legend: {
+            margin: {
+              top: 5,
+              right: 35,
+              bottom: 5,
+              left: 0
+            }
+          }
+        }
+      };
+      scope.dataOptions = {
+        chart: {
+          type: 'pieChart',
+          height: 300,
+          width: 300,
+          donut: true,
+          x: function (d) { return d.key; },
+          y: function (d) { return d.y; },
+          showLabels: false,
+          pie: {
+            startAngle: function (d) { return d.startAngle / 2 - Math.PI / 2; },
+            endAngle: function (d) { return d.endAngle / 2 - Math.PI / 2; }
+          },
+          duration: 500,
+          legend: {
+            margin: {
+              top: 25,
+              right: 70,
+              bottom: 5,
+              left: 0
+            }
+          }
+        }
+      };
+      scope.addDots = AddDotsToIntService;
+
+      function getTableData(question) {
+        var tableData = [];
+        _.each(question.answers, function(answer){
+          var perc = PercentVotesService(answer.total_count, question);
+          tableData.push({key: answer.text, y:perc.substring(0, perc.length - 1)});
+        });
+        return tableData;
+      }
+
+      scope.i18next = $i18next;
+      var participationoptionvotes = $i18next('avAdmin.dashboard.optionvotes');
+      var participationBlankVotes = $i18next('avAdmin.dashboard.blankvotes');
+      var participationNullVotes  = $i18next('avAdmin.dashboard.nullvotes');
+
+      /*
+      scope.$on("i18nextLanguageChange", function(){
+        scope.participationoptionvotes = $i18next('avAdmin.dashboard.optionvotes');
+        scope.participationBlankVotes = $i18next('avAdmin.dashboard.blankvotes');
+        scope.participationNullVotes  = $i18next('avAdmin.dashboard.nullvotes');
+      });
+      */
+
+      function getParticipationData(question) {
+        return [
+          {key: participationoptionvotes, y: scope.addDots(question.totals.valid_votes)},
+          {key: participationBlankVotes,  y: scope.addDots(question.totals.blank_votes)},
+          {key: participationNullVotes,   y: scope.addDots(question.totals.null_votes)}
+        ];
+      }
+
+      scope.chart_fns = {
+          getTableData: getTableData,
+          getParticipationData: getParticipationData
+      };
 
       ElectionsApi.getElection(id)
         .then(function(el) {
