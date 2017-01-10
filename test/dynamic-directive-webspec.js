@@ -1,6 +1,6 @@
 /* jshint ignore:start */
 describe("dynamic-directive tests", function () {
- 
+"use strict"; 
 
 
   it("should login as admin", function(){
