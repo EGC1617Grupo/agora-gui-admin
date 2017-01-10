@@ -286,13 +286,10 @@
         </div>
     </div>
     <div ng-if="!showtable">
-        <div ng-repeat="q in election.results.questions track by $index">
-            <h2>{{ q.title }}</h2>
-            <div style="display: flex; flex-wrap: wrap">
-                <nvd3 options="dataOptions" data="chart_fns.getTableData(q)"></nvd3>
-                <nvd3 options="participationOptions" data="chart_fns.getParticipationData(q)"></nvd3>
-            </div>
-        </div>
+        <results-charts
+          question="q"
+          ng-repeat="q in election.results.questions track by $index">
+        </results-charts>
     </div>
     <!-- endof results -->
 </div>
