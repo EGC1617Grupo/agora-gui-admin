@@ -149,32 +149,39 @@ angular.module('avAdmin')
       };
       scope.addDots = AddDotsToIntService;
 
-      scope.getTableData = function(question) {
+      function getTableData(question) {
         var tableData = [];
         _.each(question.answers, function(answer){
           var perc = PercentVotesService(answer.total_count, question);
           tableData.push({key: answer.text, y:perc.substring(0, perc.length - 1)});
         });
         return tableData;
-      };
+      }
 
       scope.i18next = $i18next;
-      scope.participationoptionvotes = $i18next('avAdmin.dashboard.optionvotes');
-      scope.participationBlankVotes = $i18next('avAdmin.dashboard.blankvotes');
-      scope.participationNullVotes  = $i18next('avAdmin.dashboard.nullvotes');
+      var participationoptionvotes = $i18next('avAdmin.dashboard.optionvotes');
+      var participationBlankVotes = $i18next('avAdmin.dashboard.blankvotes');
+      var participationNullVotes  = $i18next('avAdmin.dashboard.nullvotes');
 
+      /*
       scope.$on("i18nextLanguageChange", function(){
         scope.participationoptionvotes = $i18next('avAdmin.dashboard.optionvotes');
         scope.participationBlankVotes = $i18next('avAdmin.dashboard.blankvotes');
         scope.participationNullVotes  = $i18next('avAdmin.dashboard.nullvotes');
       });
+      */
 
-      scope.getParticipationData = function(question) {
+      function getParticipationData(question) {
         return [
-          {key: scope.participationoptionvotes, y: scope.addDots(question.totals.valid_votes)},
-          {key: scope.participationBlankVotes, y: scope.addDots(question.totals.blank_votes)},
-          {key: scope.participationNullVotes,  y: scope.addDots(question.totals.null_votes)}
+          {key: participationoptionvotes, y: scope.addDots(question.totals.valid_votes)},
+          {key: participationBlankVotes,  y: scope.addDots(question.totals.blank_votes)},
+          {key: participationNullVotes,   y: scope.addDots(question.totals.null_votes)}
         ];
+      }
+
+      scope.chart_fns = {
+          getTableData: getTableData,
+          getParticipationData: getParticipationData
       };
 
       ElectionsApi.getElection(id)
